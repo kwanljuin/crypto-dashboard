@@ -1,7 +1,7 @@
 'use client';
 
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { GlassCard } from '@/components/ui/glass-card';
+import { GlassPanel } from '@/components/ui/glass-panel';
 import { useState } from 'react';
 
 interface PriceChartProps {
@@ -29,7 +29,7 @@ export const PriceChart = ({ data, coinName = 'Coin' }: PriceChartProps) => {
     };
 
     return (
-        <GlassCard hoverEffect={false} className="p-6">
+        <GlassPanel className="p-6">
             <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-mono font-bold">Price Chart</h3>
 
@@ -39,8 +39,8 @@ export const PriceChart = ({ data, coinName = 'Coin' }: PriceChartProps) => {
                             key={period.value}
                             onClick={() => setSelectedPeriod(period.value)}
                             className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${selectedPeriod === period.value
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'bg-muted/20 hover:bg-muted/40'
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted/20 hover:bg-muted/40'
                                 }`}
                         >
                             {period.label}
@@ -77,7 +77,7 @@ export const PriceChart = ({ data, coinName = 'Coin' }: PriceChartProps) => {
                             backdropFilter: 'blur(12px)',
                         }}
                         labelFormatter={(timestamp) => new Date(timestamp).toLocaleString()}
-                        formatter={(value: number) => [`$${value.toLocaleString()}`, 'Price']}
+                        formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'Price']}
                     />
                     <Area
                         type="monotone"
@@ -88,6 +88,6 @@ export const PriceChart = ({ data, coinName = 'Coin' }: PriceChartProps) => {
                     />
                 </AreaChart>
             </ResponsiveContainer>
-        </GlassCard>
+        </GlassPanel>
     );
 };

@@ -27,7 +27,7 @@ export const PriceDisplay = ({
             setFlash(price > prevPrice ? 'up' : 'down');
             setPrevPrice(price);
 
-            const timer = setTimeout(() => setFlash(null), 600);
+            const timer = setTimeout(() => setFlash(null), 400);
             return () => clearTimeout(timer);
         }
     }, [price, prevPrice, animate]);
@@ -36,57 +36,45 @@ export const PriceDisplay = ({
 
     const sizeClasses = {
         sm: 'text-lg',
-        md: 'text-2xl',
-        lg: 'text-4xl'
+        md: 'text-3xl',
+        lg: 'text-6xl'
     };
 
     const changeSizeClasses = {
         sm: 'text-xs',
         md: 'text-sm',
-        lg: 'text-base'
+        lg: 'text-lg'
     };
 
     return (
-        <div className="flex items-baseline gap-3">
-            <motion.div
-                className={`font-mono font-bold ${sizeClasses[size]} relative`}
-                animate={flash ? {
-                    color: flash === 'up' ? '#10B981' : '#EF4444',
-                } : {}}
-                transition={{ duration: 0.3 }}
-            >
-                ${price.toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: price < 1 ? 6 : 2
-                })}
+        <div className="flex flex-col gap-1">
+            <div className="flex items-baseline gap-3">
+                <motion.div
+                    className={`data-text font-black ${sizeClasses[size]} relative inline-block px-1`}
+                    animate={flash ? {
+                        backgroundColor: flash === 'up' ? '#10B981' : '#EF4444',
+                        color: '#000000',
+                    } : {
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        color: '#FFFFFF',
+                    }}
+                    transition={{ duration: 0.1 }}
+                >
+                    ${price.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: price < 1 ? 6 : 2
+                    })}
+                </motion.div>
 
-                {/* Flash overlay */}
-                <AnimatePresence>
-                    {flash && (
-                        <motion.div
-                            initial={{ opacity: 0.8 }}
-                            animate={{ opacity: 0 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className={`absolute inset-0 rounded-lg blur-sm ${flash === 'up' ? 'bg-green-500/30' : 'bg-red-500/30'
-                                }`}
-                        />
-                    )}
-                </AnimatePresence>
-            </motion.div>
-
-            {showChange && (
-                <div className={`flex items-center gap-1 ${changeSizeClasses[size]} font-medium ${isPositive ? 'text-green-500' : 'text-red-500'
-                    }`}>
-                    {isPositive ? (
-                        <TrendingUp className="w-4 h-4" />
-                    ) : (
-                        <TrendingDown className="w-4 h-4" />
-                    )}
-                    <span>
+                {showChange && (
+                    <div className={`flex items-center gap-1 ${changeSizeClasses[size]} font-black uppercase tracking-tighter ${isPositive ? 'text-green-400' : 'text-red-400'
+                        }`}>
                         {isPositive ? '+' : ''}{change24h.toFixed(2)}%
-                    </span>
-                </div>
+                    </div>
+                )}
+            </div>
+            {size === 'lg' && (
+                <div className="h-1 w-full bg-white/20 mt-2" />
             )}
         </div>
     );

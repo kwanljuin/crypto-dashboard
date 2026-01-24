@@ -1,6 +1,6 @@
 'use client';
 
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 interface MiniSparklineProps {
     data: number[];
@@ -18,16 +18,18 @@ export const MiniSparkline = ({
 
     return (
         <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData}>
-                <Line
+            <AreaChart data={chartData}>
+                <Area
                     type="monotone"
                     dataKey="value"
                     stroke={lineColor}
-                    strokeWidth={1.5}
+                    fill={lineColor}
+                    fillOpacity={0.1}
+                    strokeWidth={3}
                     dot={false}
                     isAnimationActive={false}
                 />
-            </LineChart>
+            </AreaChart>
         </ResponsiveContainer>
     );
 };
