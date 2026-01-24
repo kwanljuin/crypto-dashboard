@@ -11,16 +11,18 @@ interface CandleData {
 
 export function MiniCandleChart({ prices }: { prices: number[] }) {
     // Generate mock OHLC from price points
-    const candles: CandleData[] = prices.map((p, i) => {
+    const candles: CandleData[] = React.useMemo(() => prices.map((p, i) => {
         const prev = i > 0 ? prices[i - 1] : p;
         const volatility = p * 0.01;
+        // Use a deterministic "pseudo-random" based on p and i to satisfy purity checks
+        const pseudoRand = ((p * 1000) % 100) / 100;
         return {
             o: prev,
             c: p,
-            h: Math.max(prev, p) + Math.random() * volatility,
-            l: Math.min(prev, p) - Math.random() * volatility
+            h: Math.max(prev, p) + pseudoRand * volatility,
+            l: Math.min(prev, p) - (1 - pseudoRand) * volatility
         };
-    });
+    }), [prices]);
 
     const max = Math.max(...candles.map(c => c.h));
     const min = Math.min(...candles.map(c => c.l));

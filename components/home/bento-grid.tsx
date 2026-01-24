@@ -5,7 +5,6 @@ import { PriceDisplay } from '@/components/price-display';
 import { MiniSparkline } from '@/components/charts/mini-sparkline';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'motion/react';
 
 interface CoinData {
     id: string;

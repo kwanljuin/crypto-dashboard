@@ -31,7 +31,7 @@ export const PriceChart = ({ data, coinName = 'Coin' }: PriceChartProps) => {
     return (
         <GlassPanel className="p-6">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-mono font-bold">Price Chart</h3>
+                <h3 className="text-lg font-mono font-bold">{coinName} Price History</h3>
 
                 <div className="flex gap-2">
                     {periods.map((period) => (
@@ -77,7 +77,7 @@ export const PriceChart = ({ data, coinName = 'Coin' }: PriceChartProps) => {
                             backdropFilter: 'blur(12px)',
                         }}
                         labelFormatter={(timestamp) => new Date(timestamp).toLocaleString()}
-                        formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'Price']}
+                        formatter={(value: number | string | undefined) => [`$${Number(value || 0).toLocaleString()}`, 'Price']}
                     />
                     <Area
                         type="monotone"

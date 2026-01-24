@@ -1,7 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'motion/react';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 interface PriceDisplayProps {

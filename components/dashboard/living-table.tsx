@@ -10,7 +10,16 @@ import {
 import { motion } from 'motion/react';
 
 interface LivingTableProps {
-    coins: any[];
+    coins: {
+        id: string;
+        name: string;
+        symbol: string;
+        image: string;
+        current_price: number;
+        price_change_percentage_24h: number;
+        market_cap: number;
+        sparkline_in_7d: { price: number[] };
+    }[];
 }
 
 export function LivingTable({ coins }: LivingTableProps) {
@@ -30,7 +39,7 @@ export function LivingTable({ coins }: LivingTableProps) {
             {/* Rows */}
             {coins.map((coin, i) => {
                 const isPositive = coin.price_change_percentage_24h >= 0;
-                const sparklineData = coin.sparkline_in_7d.price.map((p: number, index: number) => ({ value: p }));
+                const sparklineData = coin.sparkline_in_7d.price.map((p: number) => ({ value: p }));
 
                 return (
                     <motion.div
